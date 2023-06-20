@@ -1,4 +1,4 @@
-﻿using app.Models;
+﻿using app.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
