@@ -1,14 +1,6 @@
 version: '3.4'
 
 services:
-  app:
-    image: ${DOCKER_REGISTRY-}app
-    build:
-      context: .
-      dockerfile: app/Dockerfile
-    depends_on:
-      - db
-
   db:
     image: mysql:5.7
     command: --default-authentication-plugin=mysql_native_password
@@ -30,6 +22,14 @@ services:
       - 8080:8080
     networks:
       - mysql-compose-network
+
+  app:
+    image: ${DOCKER_REGISTRY-}app
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    depends_on:
+      - db
 
 networks: 
   mysql-compose-network:
