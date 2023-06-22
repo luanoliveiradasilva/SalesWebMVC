@@ -16,11 +16,34 @@ namespace app.Data
         {
         }
 
-        public DbSet<app.Models.Departments> Departments { get; set; } = default!;
+        public DbSet<app.Models.Department> Departments { get; set; }
+
+        public DbSet<app.Models.Seller> Sellers { get; set; }
+        public DbSet<app.Models.SalesRecord> SalesRecords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;database=SalesWebMVC;uid=root;pwd=root", ServerVersion.Parse("7.0.0"));
+        }
+
+        public void ConfigureService(IServiceCollection service)
+        {
+            service.AddScoped<SeedingService>();
+        }
+
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, SeedingService seeding)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                seeding.Seed();
+            }
+            else
+            {
+
+                app.UseExceptionHandler("/Home/Error")
+                        .UseHsts();
+            }
         }
     }
 }
