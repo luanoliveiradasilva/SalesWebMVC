@@ -8,7 +8,6 @@ namespace app.Data
 
         private appContext _appContext;
 
-
         public SeedingService(appContext appContext)
         {
             _appContext = appContext;

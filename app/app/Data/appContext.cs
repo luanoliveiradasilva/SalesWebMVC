@@ -25,25 +25,5 @@ namespace app.Data
         {
             optionsBuilder.UseMySql("server=localhost;database=SalesWebMVC;uid=root;pwd=root", ServerVersion.Parse("7.0.0"));
         }
-
-        public void ConfigureService(IServiceCollection service)
-        {
-            service.AddScoped<SeedingService>();
-        }
-
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, SeedingService seeding)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                seeding.Seed();
-            }
-            else
-            {
-
-                app.UseExceptionHandler("/Home/Error")
-                        .UseHsts();
-            }
-        }
     }
 }
