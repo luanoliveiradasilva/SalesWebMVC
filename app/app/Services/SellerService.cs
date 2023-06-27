@@ -1,5 +1,6 @@
 ﻿using app.Data;
 using app.Models;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 
 namespace app.Services
@@ -26,7 +27,7 @@ namespace app.Services
 
         public Seller FindById(int id)
         {
-            return _appContext.Sellers.FirstOrDefault(obj => obj.id == id);
+            return _appContext.Sellers.Include(obj => obj.department).FirstOrDefault(obj => obj.id == id);
         }
 
         public void Remove(int id)
