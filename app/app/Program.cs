@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using app.Data;
 using System;
+using app.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<appContext>(options =>
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<appContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<SellerService>();
 
 var app = builder.Build();
 
@@ -23,6 +25,9 @@ if (app.Environment.IsDevelopment())
     {
         var seeding = scope.ServiceProvider.GetRequiredService<SeedingService>();
         seeding.Seed();
+
+        var sellerService = scope.ServiceProvider.GetRequiredService<SellerService>();
+
     }
 }
 else
