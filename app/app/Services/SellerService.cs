@@ -17,5 +17,12 @@ namespace app.Services
         {
             return _appContext.Sellers.ToList();
         }
+
+        public void Insert(Seller obj)
+        {
+            obj.department = _appContext.Departments.First();
+            _appContext.Add(obj);
+            _appContext.SaveChanges();
+        }
     }
 }

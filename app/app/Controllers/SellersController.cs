@@ -1,4 +1,5 @@
-﻿using app.Services;
+﻿using app.Models;
+using app.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app.Controllers
@@ -18,6 +19,28 @@ namespace app.Controllers
             var list = _sellerService.FindAll();
 
             return View(list);
+        }
+
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details()
+        {
+            return View();
         }
     }
 }
