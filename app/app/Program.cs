@@ -14,6 +14,7 @@ builder.Services.AddDbContext<appContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<SeedingService>();
 builder.Services.AddScoped<SellerService>();
+builder.Services.AddScoped<DepartmentService>();
 
 var app = builder.Build();
 
@@ -27,6 +28,7 @@ if (app.Environment.IsDevelopment())
         seeding.Seed();
 
         var sellerService = scope.ServiceProvider.GetRequiredService<SellerService>();
+        var departmentService = scope.ServiceProvider.GetRequiredService<DepartmentService>();
 
     }
 }
