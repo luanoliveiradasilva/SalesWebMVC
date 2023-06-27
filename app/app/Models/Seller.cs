@@ -10,19 +10,25 @@ namespace app.Models
         public int id { get; set; }
 
         [Display(Name = "Name")]
+        [Required(ErrorMessage = "{0} Requerid")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
         public string name { get; set; }
 
         [Display(Name = "E-mail")]
+        [EmailAddress(ErrorMessage = "Enter a valid E-mail")]
         [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "{0} Requerid")]
         public string email { get; set; }
 
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "{0} Requerid")]
         public DateTime birthDate { get; set; }
 
         [Display(Name = "Base Salary")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
+        [Required(ErrorMessage = "{0} Requerid")]
         public double baseSalary { get; set; }
 
         [Display(Name = "Department")]
