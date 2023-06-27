@@ -1,5 +1,6 @@
 ﻿using app.Data;
 using app.Models;
+using app.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 
@@ -35,6 +36,25 @@ namespace app.Services
             var obj = _appContext.Sellers.Find(id);
             _appContext.Sellers.Remove(obj);
             _appContext.SaveChanges();
+        }
+
+        public void Update(Seller obj)
+        {
+            if(!_appContext.Sellers.Any(x => x.id == obj.id))
+            {
+                throw new NotFoundException("Id not found");
+            }
+            try
+            {
+                _appContext.Update(obj);
+                _appContext.SaveChanges();
+            }
+            catch(DbConcurrencyException ex)
+            {
+                throw new DbConcurrencyException(ex.Message);
+            }
+
+            
         }
     }
 }
