@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using app.Data;
 using System;
 using app.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<appContext>(options =>
@@ -38,6 +40,16 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+var enUS = new CultureInfo("en-US");
+var localizationOtions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-US"),
+    SupportedCultures = new List<CultureInfo> { enUS },
+    SupportedUICultures = new List<CultureInfo> { enUS }
+};
+
+app.UseRequestLocalization(localizationOtions);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
