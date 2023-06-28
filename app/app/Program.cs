@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<appContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("appContext"), ServerVersion.Parse("7.0.0") ?? throw new InvalidOperationException("Connection string 'appContext' not found.")));
+   options.UseMySql(builder.Configuration.GetConnectionString("appContext"), ServerVersion.Parse("7.0.0") ?? throw new InvalidOperationException("Connection string 'appContext' not found.")));
 
 
 

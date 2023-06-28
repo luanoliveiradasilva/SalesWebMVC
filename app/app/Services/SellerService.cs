@@ -15,39 +15,41 @@ namespace app.Services
             _appContext = appContext;
         }
 
-        public List<Seller> FindAll()
+        public async Task<List<Seller>> FindAllAsync()
         {
-            return _appContext.Sellers.ToList();
+            return await _appContext.Sellers.ToListAsync();
         }
 
-        public void Insert(Seller obj)
+        public async Task InsertAsync(Seller obj)
         {
             _appContext.Add(obj);
-            _appContext.SaveChanges();
+            await _appContext.SaveChangesAsync();
         }
 
-        public Seller FindById(int id)
+        public async Task<Seller> FindByIdAsync(int id)
         {
-            return _appContext.Sellers.Include(obj => obj.department).FirstOrDefault(obj => obj.id == id);
+            return await _appContext.Sellers.Include(obj => obj.department).FirstOrDefaultAsync(obj => obj.id == id);
         }
 
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _appContext.Sellers.Find(id);
+            var obj = await _appContext.Sellers.FindAsync(id);
             _appContext.Sellers.Remove(obj);
-            _appContext.SaveChanges();
+            await _appContext.SaveChangesAsync();
         }
 
-        public void Update(Seller obj)
+        public async Task UpdateAsync(Seller obj)
         {
-            if(!_appContext.Sellers.Any(x => x.id == obj.id))
+            bool hasAny = await _appContext.Sellers.AnyAsync(x => x.id == obj.id);
+
+            if (!hasAny)
             {
                 throw new NotFoundException("Id not found");
             }
             try
             {
                 _appContext.Update(obj);
-                _appContext.SaveChanges();
+                await _appContext.SaveChangesAsync();
             }
             catch(DbConcurrencyException ex)
             {
