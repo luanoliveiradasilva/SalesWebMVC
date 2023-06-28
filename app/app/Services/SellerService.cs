@@ -33,9 +33,17 @@ namespace app.Services
 
         public async Task RemoveAsync(int id)
         {
-            var obj = await _appContext.Sellers.FindAsync(id);
-            _appContext.Sellers.Remove(obj);
-            await _appContext.SaveChangesAsync();
+            try
+            {
+                var obj = await _appContext.Sellers.FindAsync(id);
+                _appContext.Sellers.Remove(obj);
+                await _appContext.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new IntegrityException(ex.Message);
+            }
         }
 
         public async Task UpdateAsync(Seller obj)
